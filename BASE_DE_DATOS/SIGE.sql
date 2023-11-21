@@ -64,7 +64,7 @@ ENGINE = InnoDB;
 -- Table `SIGE`.`Producto_servicio`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SIGE`.`Producto_servicio` (
-  `idProducto_servicio` INT NOT NULL,
+  `idProducto_servicio` INT NOT NULL AUTO_INCREMENT,
   `nom_producto_servicio` VARCHAR(45) NOT NULL,
   `descripcion` VARCHAR(45) NOT NULL,
   `precio` FLOAT NOT NULL,
@@ -102,7 +102,7 @@ ENGINE = InnoDB;
 -- Table `SIGE`.`proveedor`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SIGE`.`proveedor` (
-  `idproveedor` INT NOT NULL,
+  `idproveedor` INT NOT NULL AUTO_INCREMENT,
   `nom_empresa_pro` VARCHAR(45) NOT NULL,
   `per_conctacto_pro` VARCHAR(45) NOT NULL,
   `direccion_pro` VARCHAR(45) NOT NULL,
@@ -116,7 +116,7 @@ ENGINE = InnoDB;
 -- Table `SIGE`.`detalle_venta`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SIGE`.`detalle_venta` (
-  `iddetalle_venta` INT NOT NULL,
+  `iddetalle_venta` INT NOT NULL AUTO_INCREMENT,
   `venta_idventa` INT NOT NULL,
   `precio_unidad` FLOAT NOT NULL,
   `subtotal` FLOAT NOT NULL,
@@ -141,7 +141,7 @@ ENGINE = InnoDB;
 -- Table `SIGE`.`orden_compra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SIGE`.`orden_compra` (
-  `idorden_compra` INT NOT NULL,
+  `idorden_compra` INT NOT NULL AUTO_INCREMENT,
   `fecha_creacion` DATE NOT NULL,
   `total_compra` FLOAT NOT NULL,
   PRIMARY KEY (`idorden_compra`))
