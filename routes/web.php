@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () { //esta es la estructura base, guiense con esto para traer los htmls
     return view('welcome');
 });
+
+// CRISS ----------------------------------------------------------------------------------------
+
+Route::get('/hola', function () {
+    return view('hola');
+});
+
+// -----------------------------------------------------------------------------------

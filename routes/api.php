@@ -17,3 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// Criss ----------------------------------------------------------------------------------------
+
+use App\Http\Controllers\MostrarController; //con esto llamamos al controlador que creamos
+
+Route::get('/mostrar', [MostrarController::class, 'mostrar']); //con esto le damos una URL para el resultado
+
+// ----------------------------------------------------------------------------------------------
