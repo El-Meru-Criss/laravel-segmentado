@@ -23,4 +23,8 @@ Route::get('/hola', function () {
     return view('hola');
 });
 
+Route::get('/inventario', function () {
+    return view('inventario');
+});
+
 // -----------------------------------------------------------------------------------
