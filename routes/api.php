@@ -34,6 +34,13 @@ Route::post('/crearProveedor', [ProveedorController::class, 'crear']);
 Route::delete('/eliminarProveedor', [ProveedorController::class, 'eliminar']);
 Route::put('/actualizarProveedor', [ProveedorController::class, 'actualizar']);
 
+// ---------------------- INVENTARIOS --------------------------------------------------
+
+use App\Http\Controllers\CRISS\InventarioController; //llamamos al controlador
+
+Route::get('/mostrarInventario', [InventarioController::class, 'mostrar']);
+Route::post('/crearInventario', [InventarioController::class, 'crear']);
+Route::delete('/eliminarInventario', [InventarioController::class, 'eliminar']);
 
 
-// ----------------------------------------------------------------------------------------------
+// --------------------- FIN CRISS ----------------------------------------------------------------

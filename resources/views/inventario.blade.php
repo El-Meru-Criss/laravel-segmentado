@@ -10,7 +10,7 @@
 
     <title>Inventarios</title>
 </head>
-<body>
+<body onload="mostrarInventario()">
     
     <center>
 
@@ -23,7 +23,7 @@
         </button>
 
         <!-- C PRODUCTO/SERVICIO -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button onclick="F_CProducto()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Crear producto/servicio
         </button>
 
@@ -54,7 +54,20 @@
                 </div>
                 </div>
             </div>
-        </div>  
+        </div>
+
+        <br>
+        <br>
+
+        <table id="inventario" class="table" style="width: 80%;">
+            <tr>
+                <td>PRODUCTO / SERVICIO</td>
+                <td>Descripcion</td>
+                <td>Precio</td>
+                <td>Stock</td>
+                <td>Opciones</td>
+            </tr>
+        </table>
 
     </center>
 
