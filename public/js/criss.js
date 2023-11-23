@@ -60,9 +60,15 @@ function F_EProveedor(id) {
             // Llama a la función después de obtener los datos
             F_CProveedor();
 
-            // Accede a las propiedades directamente sin usar JSON.stringify
-            alert(datosObtenidos.nom_empresa_pro);
+            // Accede a las propiedades directamente
+            
             $("#Empresa").val(datosObtenidos.nom_empresa_pro);
+            $("#Representante").val(datosObtenidos.per_conctacto_pro);
+            $("#direccion").val(datosObtenidos.direccion_pro);
+            $("#telefono").val(datosObtenidos.telefono_pro);
+            $("#correo").val(datosObtenidos.correo_pro);
+
+            $("#opciones").html('<button onclick="actualizarProveedor('+ id + ')"> Actualizar </button>');
         }
       })
 }
@@ -81,6 +87,29 @@ function crearProveedor() {
       $.ajax({
         type: "POST",
         url: "http://localhost:8000/api/crearProveedor",
+        data:datos,
+        success:function(d) {
+            alert(JSON.stringify(d));
+            proveedores();
+        }
+      })
+}
+
+function actualizarProveedor(id) {
+    var datos = {
+        "id":id,
+        "Empresa":$("#Empresa").val(),
+        "Representante":$("#Representante").val(),
+        "direccion":$("#direccion").val(),
+        "telefono":$("#telefono").val(),
+        "correo":$("#correo").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "PUT",
+        url: "http://localhost:8000/api/actualizarProveedor",
         data:datos,
         success:function(d) {
             alert(JSON.stringify(d));

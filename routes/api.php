@@ -32,6 +32,8 @@ Route::get('/mostrarProveedor', [ProveedorController::class, 'mostrar']); //Asig
 Route::get('/mostrarUnProveedor', [ProveedorController::class, 'mostrarUno']);
 Route::post('/crearProveedor', [ProveedorController::class, 'crear']);
 Route::delete('/eliminarProveedor', [ProveedorController::class, 'eliminar']);
+Route::put('/actualizarProveedor', [ProveedorController::class, 'actualizar']);
+
 
 
 // ----------------------------------------------------------------------------------------------

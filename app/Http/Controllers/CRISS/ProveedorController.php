@@ -63,4 +63,28 @@ class ProveedorController extends Controller
         return response()->json(['mensaje' => 'Proveedor eliminado con éxito']);
     }
 
+        public function actualizar(Request $request)
+    {
+        $id = $request->input('id');
+        $Empresa = $request->input('Empresa');
+        $Representante = $request->input('Representante');
+        $direccion = $request->input('direccion');
+        $telefono = $request->input('telefono');
+        $correo = $request->input('correo');
+
+        // Realiza la consulta MySQL para actualizar los datos del proveedor
+        DB::table('proveedor')
+            ->where('idproveedor', $id)
+            ->update([
+                'nom_empresa_pro' => $Empresa,
+                'per_conctacto_pro' => $Representante,
+                'direccion_pro' => $direccion,
+                'telefono_pro' => $telefono,
+                'correo_pro' => $correo,
+            ]);
+
+        return response()->json(['mensaje' => 'Proveedor actualizado con éxito']);
+    }
+
+
 }
