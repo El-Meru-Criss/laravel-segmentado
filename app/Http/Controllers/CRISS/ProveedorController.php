@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller; // Importar la clase Controller
 
 
-class ProveedorController extends Controller
+class ProveedorController extends Controller //Este controlador contendra todo el CRUD de la tabla proveedor
 {
     public function mostrar() // MOSTRAR -----------------------------------------------------
     {
