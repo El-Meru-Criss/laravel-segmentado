@@ -46,3 +46,14 @@ Route::put('/actualizarProducto', [InventarioController::class, 'actualizar']);
 
 
 // --------------------- FIN CRISS ----------------------------------------------------------------
+
+
+// Steven ----------------------------------------------------------------------------------------
+//--------------------- EMPLEADO -----------------------------------------------------
+use App\Http\Controllers\Steven\empleadoController; //llamamos al controlador
+
+Route::get('/mostrarEmpleados', [empleadoController::class, 'index']); //Asignamos el metodo, la URL y la funcion a ejecutar
+Route::get('/mostrarUnEmpleado', [empleadoController::class, 'mostrarUno']);
+Route::post('/crearEmpleado', [empleadoController::class, 'create']);
+Route::delete('/eliminarEmpleado', [empleadoController::class, 'destroy']);
+Route::put('/actualizarEmpleado', [empleadoController::class, 'actualizar']);
