@@ -146,7 +146,7 @@ function mostrarInventario() {
         success:function(datos) {
             $("#inventario").html('');
             for (var i = 0; i < datos.length; i++) { //con este otro agrega una fila con los datos consultados
-                $("#inventario").append('<tr>' + '<td>' + datos[i].nom_producto_servicio + '</td>' + '<td>' + datos[i].descripcion + '</td>' + '<td>' + datos[i].precio + '</td>' + '<td>' + datos[i].cantidad_stock + '</td>' +  ' <td> <button onclick="editarProducto(' + datos[i].idProducto_servicio + ')"> editar </button> <button onclick="eliminarInventario(' + datos[i].idProducto_servicio + ')"> eliminar </button> </td>' + '</tr>');
+                $("#inventario").append('<tr>' + '<td>' + datos[i].nom_producto_servicio + '</td>' + '<td>' + datos[i].descripcion + '</td>' + '<td>' + datos[i].precio + '</td>' + '<td>' + datos[i].cantidad_stock + '</td>' +  ' <td> <button onclick="F_EProducto(' + datos[i].idProducto_servicio + ')" data-bs-toggle="modal" data-bs-target="#exampleModal"> editar </button> <button onclick="eliminarInventario(' + datos[i].idProducto_servicio + ')"> eliminar </button> </td>' + '</tr>');
             };
             
         }, error: function (error) {
@@ -158,6 +158,37 @@ function mostrarInventario() {
 function F_CProducto() {
     $("#contenido").html('<label for="nom_producto_servicio"> Producto/servicio: </label>    <input type="text" placeholder="producto/servicio" id="nom_producto_servicio">    <br>    <label for="descripcion"> descripcion: </label>    <input type="text" placeholder="descripcion" id="descripcion">    <br>    <label for="precio"> precio venta: </label>    <input type="number" placeholder="precio" id="precio">    <br>    <label for="cantidad_stock"> cantidad_stock: </label>    <input type="number" placeholder="cantidad_stock" id="cantidad_stock">    ');
     $("#opciones").html('<button onclick="crearProducto()"> Crear </button>');
+}
+
+function F_EProducto(id) {
+    var datos = {
+        "id":id
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/api/mostrarUnProducto",
+        data:datos,
+        success:function(d) {
+            // Almacena los datos obtenidos
+            datosObtenidos = d;
+
+            // Llama a la función después de obtener los datos
+            F_CProducto();
+
+            // Accede a las propiedades directamente
+            
+            $("#nom_producto_servicio").val(datosObtenidos.nom_producto_servicio);
+            $("#descripcion").val(datosObtenidos.descripcion);
+            $("#precio").val(datosObtenidos.precio);
+            $("#cantidad_stock").val(datosObtenidos.cantidad_stock);
+
+            $("#opciones").html('<button onclick="actualizarProducto('+ id + ')"> Actualizar </button>');
+        }
+      })
+
 }
 
 function crearProducto() {
@@ -177,6 +208,29 @@ function crearProducto() {
         success:function(d) {
             alert(JSON.stringify(d));
             mostrarInventario();
+        }
+      })
+}
+
+function actualizarProducto(id) {
+    var datos = {
+        "id":id,
+        "nom_producto_servicio":$("#nom_producto_servicio").val(),
+        "descripcion":$("#descripcion").val(),
+        "precio":$("#precio").val(),
+        "cantidad_stock":$("#cantidad_stock").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "PUT",
+        url: "http://localhost:8000/api/actualizarProducto",
+        data:datos,
+        success:function(d) {
+            alert(JSON.stringify(d));
+            mostrarInventario();
+            F_EProducto(id);
         }
       })
 }

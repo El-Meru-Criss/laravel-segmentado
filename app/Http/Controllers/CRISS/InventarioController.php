@@ -26,7 +26,7 @@ class InventarioController extends Controller //Este controlador contendra todo 
         $id = $request->input('id');
 
         // Realizar la consulta a la base de datos para obtener un solo proveedor por su ID
-        $proveedor = DB::table('proveedor')->where('idproveedor', $id)->first();
+        $proveedor = DB::table('producto_servicio')->where('idProducto_servicio', $id)->first();
 
         // Convertir los datos a formato JSON y devolver la respuesta HTTP
         return response()->json($proveedor);
@@ -65,24 +65,22 @@ class InventarioController extends Controller //Este controlador contendra todo 
         public function actualizar(Request $request)
     {
         $id = $request->input('id');
-        $Empresa = $request->input('Empresa');
-        $Representante = $request->input('Representante');
-        $direccion = $request->input('direccion');
-        $telefono = $request->input('telefono');
-        $correo = $request->input('correo');
+        $nom_producto_servicio = $request->input('nom_producto_servicio');
+        $descripcion = $request->input('descripcion');
+        $precio = $request->input('precio');
+        $cantidad_stock = $request->input('cantidad_stock');
 
         // Realiza la consulta MySQL para actualizar los datos del proveedor
-        DB::table('proveedor')
-            ->where('idproveedor', $id)
+        DB::table('producto_servicio')
+            ->where('idProducto_servicio', $id)
             ->update([
-                'nom_empresa_pro' => $Empresa,
-                'per_conctacto_pro' => $Representante,
-                'direccion_pro' => $direccion,
-                'telefono_pro' => $telefono,
-                'correo_pro' => $correo,
+                'nom_producto_servicio' => $nom_producto_servicio,
+                'descripcion' => $descripcion,
+                'precio' => $precio,
+                'cantidad_stock' => $cantidad_stock,
             ]);
 
-        return response()->json(['mensaje' => 'Proveedor actualizado con éxito']);
+        return response()->json(['mensaje' => 'Producto actualizado con éxito']);
     }
 
 
