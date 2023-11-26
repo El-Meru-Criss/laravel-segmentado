@@ -305,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `SIGE`.`productos_pedidos` (
   `idProducto` INT NOT NULL,
   `idproveedor` INT NOT NULL,
   `idorden_compra` INT NOT NULL,
+  `cantidad` FLOAT NOT NULL,
   PRIMARY KEY (`idProducto`, `idproveedor`, `idorden_compra`),
   INDEX `fk_producto_provedoor_has_orden_compra_orden_compra1_idx` (`idorden_compra` ASC),
   INDEX `fk_producto_provedoor_has_orden_compra_producto_provedoor1_idx` (`idProducto` ASC, `idproveedor` ASC),
