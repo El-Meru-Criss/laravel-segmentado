@@ -68,6 +68,13 @@ use App\Http\Controllers\CRISS\Productos_PedidosController; //llamamos al contro
 Route::post('/crearProductos_Pedidos', [Productos_PedidosController::class, 'crear']);
 Route::get('/mostrarUnosProducto', [Productos_PedidosController::class, 'mostrarUnos']);
 
+// --------------------- MOVIMIENTOS ----------------------------------------------------------
+
+use App\Http\Controllers\CRISS\MovimientosController; //llamamos al controlador
+
+Route::get('/mostrarMovimientos', [MovimientosController::class, 'mostrar']);
+
+
 // --------------------- FIN CRISS ----------------------------------------------------------------
 
 

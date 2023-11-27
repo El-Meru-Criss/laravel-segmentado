@@ -462,3 +462,23 @@ function ActualizarCostoOrden_Compra() {
         }
       })
 }
+
+// ---------- Movimientos -------------------------------------------------------------------
+
+function MostrarMovimientos() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/api/mostrarMovimientos",
+        success:function(d) {
+            $("#contenido").html('<h3>Movimientos</h3>  <table id="Movimientos" class="table">    <tr>      <td>Producto</td>      <td>Cantidad</td>      <td>Tipo</td>    </tr>  </table>');
+            
+            for (var i = 0; i < d.length; i++) {
+                var tipoMovimiento = d[i].tipo == 0 ? 'Entrada' : 'Salida';
+            
+                // Agrega una fila con los datos consultados, incluyendo la columna de tipoMovimiento
+                $("#Movimientos").append('<tr> <td>'+d[i].nom_producto_servicio+'</td> <td>'+d[i].cantidad+'</td> <td>'+tipoMovimiento+'</td> </tr>');
+            };
+            
+        }
+      })
+}

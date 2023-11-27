@@ -33,7 +33,7 @@
         </button>
 
         <!-- MOVIMIENTOS -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button onclick="MostrarMovimientos()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Movimientos
         </button>
 
