@@ -44,6 +44,29 @@ Route::post('/crearInventario', [InventarioController::class, 'crear']);
 Route::delete('/eliminarInventario', [InventarioController::class, 'eliminar']);
 Route::put('/actualizarProducto', [InventarioController::class, 'actualizar']);
 
+// ---------------------- PRODUCTOS_PROVEEDOR ------------------------------------------
+
+use App\Http\Controllers\CRISS\Producto_PController; //llamamos al controlador
+
+Route::post('/crearProducto_Proveedor', [Producto_PController::class, 'crear']);
+Route::get('/mostrarProducto_Proveedor', [Producto_PController::class, 'mostrar']);
+Route::get('/mostrarProveedorProducto_Proveedor', [Producto_PController::class, 'mostrarProveedor']);
+Route::get('/mostrarPrecioProducto_Proveedor', [Producto_PController::class, 'mostrarPrecio']);
+
+// --------------------- ORDEN_COMPRA -------------------------------------------------------
+
+use App\Http\Controllers\CRISS\Orden_CController; //llamamos al controlador
+
+Route::post('/crearOrden_Compra', [Orden_CController::class, 'crear']);
+Route::get('/mostrarMasRecienteOrden_Compra', [Orden_CController::class, 'mostrarMasReciente']);
+Route::put('/actualizarOrden_Compra', [Orden_CController::class, 'actualizar']);
+
+// --------------------- PRODUCTOS PEDIDOS ---------------------------------------------------
+
+use App\Http\Controllers\CRISS\Productos_PedidosController; //llamamos al controlador
+
+Route::post('/crearProductos_Pedidos', [Productos_PedidosController::class, 'crear']);
+Route::get('/mostrarUnosProducto', [Productos_PedidosController::class, 'mostrarUnos']);
 
 // --------------------- FIN CRISS ----------------------------------------------------------------
 

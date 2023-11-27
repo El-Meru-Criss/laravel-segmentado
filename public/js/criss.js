@@ -144,7 +144,7 @@ function mostrarInventario() {
         url: "/api/mostrarInventario", //pone la url de su API
         dataType: 'json', //Define que los datos son de tipo Json
         success:function(datos) {
-            $("#inventario").html('');
+            $("#inventario").html('<tr>                <td>PRODUCTO / SERVICIO</td>                <td>Descripcion</td>                <td>Precio</td>                <td>Stock</td>                <td>Opciones</td></tr>');
             for (var i = 0; i < datos.length; i++) { //con este otro agrega una fila con los datos consultados
                 $("#inventario").append('<tr>' + '<td>' + datos[i].nom_producto_servicio + '</td>' + '<td>' + datos[i].descripcion + '</td>' + '<td>' + datos[i].precio + '</td>' + '<td>' + datos[i].cantidad_stock + '</td>' +  ' <td> <button onclick="F_EProducto(' + datos[i].idProducto_servicio + ')" data-bs-toggle="modal" data-bs-target="#exampleModal"> editar </button> <button onclick="eliminarInventario(' + datos[i].idProducto_servicio + ')"> eliminar </button> </td>' + '</tr>');
             };
@@ -156,8 +156,27 @@ function mostrarInventario() {
 }
 
 function F_CProducto() {
-    $("#contenido").html('<label for="nom_producto_servicio"> Producto/servicio: </label>    <input type="text" placeholder="producto/servicio" id="nom_producto_servicio">    <br>    <label for="descripcion"> descripcion: </label>    <input type="text" placeholder="descripcion" id="descripcion">    <br>    <label for="precio"> precio venta: </label>    <input type="number" placeholder="precio" id="precio">    <br>    <label for="cantidad_stock"> cantidad_stock: </label>    <input type="number" placeholder="cantidad_stock" id="cantidad_stock">    ');
+    $("#contenido").html('<label for="nom_producto_servicio"> Producto/servicio: </label>    <input type="text" placeholder="producto/servicio" id="nom_producto_servicio">    <br>    <label for="descripcion"> descripcion: </label>    <input type="text" placeholder="descripcion" id="descripcion">    <br>    <label for="precio"> precio venta: </label>    <input type="number" placeholder="precio" id="precio">    <br>    <label for="cantidad_stock"> cantidad_stock: </label>    <input type="number" placeholder="cantidad_stock" id="cantidad_stock">  ');
     $("#opciones").html('<button onclick="crearProducto()"> Crear </button>');
+    ProveedoresOption();
+}
+
+function ProveedoresOption() {
+    $.ajax({
+        type: "GET", //selecciona el metodo pertinente
+        url: "/api/mostrarProveedor", //pone la url de su API
+        dataType: 'json', //Define que los datos son de tipo Json
+        success:function(datos) {
+            
+            $("#contenido").append('<br> <label for="proveedor_idproveedor">Proveedor</label> <select name="" id="proveedor_idproveedor"><option value="0">Nadie</option></select> <br> <label for="precio_compra"> Precio de Compra</label> <input id="precio_compra" type="number">');
+            for (var i = 0; i < datos.length; i++) { //con este otro agrega una fila con los datos consultados
+                $("#proveedor_idproveedor").append('<option value="' + datos[i].idproveedor +'">' + datos[i].nom_empresa_pro +'</option>');
+            };
+            
+        }, error: function (error) {
+            console.error('Error al obtener datos:', error); //por si no da la vaina
+        }
+      })
 }
 
 function F_EProducto(id) {
@@ -208,6 +227,29 @@ function crearProducto() {
         success:function(d) {
             alert(JSON.stringify(d));
             mostrarInventario();
+            alert($("#proveedor_idproveedor").val())
+            if ($("#proveedor_idproveedor").val() > 0) {
+                crearProducto_Proveedor();
+            }
+        }
+      })
+}
+
+function crearProducto_Proveedor() {
+    var datos = {
+        "proveedor_idproveedor":$("#proveedor_idproveedor").val(),
+        "precio_compra":$("#precio_compra").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8000/api/crearProducto_Proveedor",
+        data:datos,
+        success:function(d) {
+            alert(JSON.stringify(d));
+            mostrarInventario();
         }
       })
 }
@@ -249,6 +291,174 @@ function eliminarInventario(id) {
         success:function(d) {
             alert(JSON.stringify(d));
             mostrarInventario();
+        }
+      })
+}
+
+// ------- PEDIDOS DE COMPRA ---------------------------------------------------------
+
+function F_CPedido_compra() {
+    $("#contenido").html('<center> <input  type="number" hidden id="id_pedido">   <div id="enunciado">      <button onclick="Iniciar_Pedido()">Iniciar Pedido</button>    </div>  <br>  <div id="productos">    </div>  <br> <br>  <div id="productos_pedidos"></div>  </center>');
+    $("#opciones").html('');
+}
+
+function Iniciar_Pedido() {
+    $("#enunciado").html('  <h3 id="Nun_pedido">Pedido #</h3>    <label for="total_pedido">Costo Del Pedido</label>    <input disabled type="number" value="0" id="total_pedido">');
+    $("#productos").html('  <label for="producto">producto</label>    <select name="" onchange="Proveedor_producto()" id="producto">      <option value="0">Nada</option>    </select>    <label for="Proveedor">Proveedor</label>    <select name="" onchange="Precio_compra()" id="Proveedor">      <option value="0">Nada</option>    </select>    <br>    <label for="cantidad">cantidad</label>    <input type="number" placeholder="cantidad" onchange="Costo_del_producto()" value="" id="cantidad">  <br>  <label for="precio_unitario">Precio Uniario</label>    <input type="number" disabled placeholder="precio unitario" id="precio_unitario">    <br><br>    <label for="costo">Costo del producto</label>    <input disabled id="costo" type="number" placeholder="costo">  <br> <br> <button onclick="Añadir_al_pedido()">Agregar a la Lista</button>');
+    $("#productos_pedidos").html('  <h4>Productos pedidos:</h5>');
+
+    $.ajax({
+    type: "POST",
+    url: "http://localhost:8000/api/crearOrden_Compra",
+        success:function(d) {
+            Numero_pedido();
+            Productos_disponibles();
+        }
+    })
+}
+
+function Numero_pedido() {
+    $.ajax({
+    type: "GET",
+    url: "http://localhost:8000/api/mostrarMasRecienteOrden_Compra",
+        success:function(d) {
+            $("#Nun_pedido").html('Pedido #' + d.idorden_compra);
+            $("#id_pedido").val(d.idorden_compra);
+        }
+    })
+}
+
+function Productos_disponibles() {
+    $.ajax({
+    type: "GET",
+    url: "http://localhost:8000/api/mostrarProducto_Proveedor",
+        success:function(d) {
+            for (var i = 0; i < d.length; i++) { //con este otro agrega una fila con los datos consultados
+                $("#producto").append('<option value="' + d[i].idProducto_servicio +'">' + d[i].nom_producto_servicio +'</option>');
+            };
+        }
+    })
+}
+
+function Proveedor_producto() {
+    var datos = {
+        "id":$("#producto").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/api/mostrarProveedorProducto_Proveedor",
+        data:datos,
+        success:function(d) {
+            var valor = 0;
+            $("#precio_unitario").val(valor);
+            Costo_del_producto();
+            $("#Proveedor").html('<option value="0">Nada</option>');
+            for (var i = 0; i < d.length; i++) { //con este otro agrega una fila con los datos consultados
+                $("#Proveedor").append('<option value="' + d[i].idproveedor +'">' + d[i].nom_empresa_pro +'</option>');
+            };
+        }
+      })
+}
+
+function Precio_compra() {
+    var datos = {
+        "id":$("#producto").val(),
+        "id2":$("#Proveedor").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/api/mostrarPrecioProducto_Proveedor",
+        data:datos,
+        success:function(d) {
+            $("#precio_unitario").val(0);
+            $("#precio_unitario").val(d.precio_compra);
+            Costo_del_producto();
+        }
+      })
+}
+
+function Costo_del_producto() {
+    var cantidad = $("#cantidad").val();
+    var precio_uni = $("#precio_unitario").val();
+    var total = cantidad * precio_uni;
+    $("#costo").val(total);
+}
+
+function Añadir_al_pedido() {
+    var idPedido = $("#id_pedido").val();
+    var idProducto = $("#producto").val();
+    var idProveedor = $("#Proveedor").val();
+    var cantidad = $("#cantidad").val();
+    var costo = $("#costo").val();
+    
+    var datos = {
+        "idPedido":idPedido,
+        "idProducto":idProducto,
+        "idProveedor":idProveedor,
+        "cantidad":cantidad,
+        "costo":costo
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8000/api/crearProductos_Pedidos",
+        data:datos,
+        success:function(d) {
+            alert(JSON.stringify(d));
+            MostrarProductosPedidos();
+            ActualizarCostoOrden_Compra();
+        }
+      })
+}
+
+function MostrarProductosPedidos() {
+    var datos = {
+        "id":$("#id_pedido").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "GET",
+        url: "http://localhost:8000/api/mostrarUnosProducto",
+        data:datos,
+        success:function(d) {
+            $("#productos_pedidos").html('<h4>Productos pedidos:</h5>Empresa - Producto - Cantidad <br>');
+            
+            for (var i = 0; i < d.length; i++) { //con este otro agrega una fila con los datos consultados
+                $("#productos_pedidos").append(d[i].nom_empresa_pro + ' - ' + d[i].nom_producto_servicio + ' - ' + d[i].cantidad + '<br>');
+            };
+        }
+      })
+}
+
+function ActualizarCostoOrden_Compra() {
+
+    var total_pedido = parseFloat($("#total_pedido").val());
+    var costo = parseFloat($("#costo").val());
+    var total_compra = costo + total_pedido;
+    
+    var datos = {
+        "id":$("#id_pedido").val(),
+        "total_compra":total_compra
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "PUT",
+        url: "http://localhost:8000/api/actualizarOrden_Compra",
+        data:datos,
+        success:function(d) {
+            $("#total_pedido").val(total_compra);
         }
       })
 }

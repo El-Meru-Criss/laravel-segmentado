@@ -28,7 +28,7 @@
         </button>
 
         <!-- CRUD PEDIDOS COMPRA -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button onclick="F_CPedido_compra()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Pedidos de compra
         </button>
 
@@ -60,13 +60,7 @@
         <br>
 
         <table id="inventario" class="table" style="width: 80%;">
-            <tr>
-                <td>PRODUCTO / SERVICIO</td>
-                <td>Descripcion</td>
-                <td>Precio</td>
-                <td>Stock</td>
-                <td>Opciones</td>
-            </tr>
+            
         </table>
 
     </center>
