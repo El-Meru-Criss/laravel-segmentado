@@ -20,10 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Criss ----------------------------------------------------------------------------------------
 
-use App\Http\Controllers\MostrarController; //con esto llamamos al controlador que creamos
-
-Route::get('/mostrar', [MostrarController::class, 'mostrar']);  //Aqui especificamos el metodo, creamos una clase y llamamos la funcion deseada
-
 //--------------------- PROVEDORES -----------------------------------------------------
 
 use App\Http\Controllers\CRISS\ProveedorController; //llamamos al controlador

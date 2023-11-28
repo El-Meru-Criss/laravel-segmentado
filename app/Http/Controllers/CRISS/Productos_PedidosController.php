@@ -59,6 +59,21 @@ class Productos_PedidosController extends Controller //Este controlador contendr
             'cantidad' => $cantidad,
         ]);
 
+        //Sumamos la cantidad al stock actual
+
+        $stockProducto = DB::table('producto_servicio')
+        ->select('cantidad_stock')
+        ->where('idProducto_servicio', $idProducto)
+        ->first();
+
+        $total_stock = $cantidad + $stockProducto->cantidad_stock;
+
+        DB::table('producto_servicio')
+        ->where('idProducto_servicio', $idProducto)
+        ->update([
+            'cantidad_stock' => $total_stock,
+        ]);
+
         return response()->json(['mensaje' => 'Producto añadido con éxito']);
     }
 
