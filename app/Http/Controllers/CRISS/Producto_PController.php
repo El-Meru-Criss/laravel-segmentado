@@ -12,9 +12,9 @@ class Producto_PController extends Controller //Este controlador contendra todo 
     public function mostrar() // MOSTRAR -----------------------------------------------------
     {
         $productosProveedores = DB::table('producto_provedoor')
-        ->join('proveedor', 'proveedor.idproveedor', '=', 'producto_provedoor.proveedor_idproveedor')
         ->join('producto_servicio', 'producto_servicio.idProducto_servicio', '=', 'producto_provedoor.Producto_servicio_idProducto_servicio')
-        ->select('proveedor.idproveedor','proveedor.nom_empresa_pro','producto_servicio.idProducto_servicio', 'producto_servicio.nom_producto_servicio', 'producto_provedoor.precio_compra')
+        ->select('producto_servicio.idProducto_servicio', 'producto_servicio.nom_producto_servicio')
+        ->groupBy('producto_servicio.idProducto_servicio', 'producto_servicio.nom_producto_servicio')
         ->get();
 
         return response()->json($productosProveedores);
@@ -80,6 +80,24 @@ class Producto_PController extends Controller //Este controlador contendra todo 
         ]);
 
         return response()->json(['mensaje' => 'Producto_proveedor creado con éxito']);
+    }
+
+    public function añadir(Request $request) // CREAR -----------------------------------------
+    {
+        
+        // Consulta para obtener el último producto creado
+        $producto = $request->input('producto');
+        $proveedor_idproveedor = $request->input('proveedor_idproveedor');
+        $precio_compra = $request->input('precio_compra');
+
+        // Realiza la consulta MySQL
+        DB::insert('INSERT INTO producto_provedoor(Producto_servicio_idProducto_servicio, proveedor_idproveedor, precio_compra) VALUES (?,?,?)', [
+            $producto,
+            $proveedor_idproveedor,
+            $precio_compra,
+        ]);
+
+        return response()->json(['mensaje' => 'Producto_proveedor añadido con éxito']);
     }
 
     public function eliminar(Request $request)

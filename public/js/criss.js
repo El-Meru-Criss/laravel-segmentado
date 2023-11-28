@@ -256,7 +256,27 @@ function actualizarProducto(id) {
         success:function(d) {
             alert(JSON.stringify(d));
             mostrarInventario();
+            añadir_producto_proveedor(id);
             F_EProducto(id);
+        }
+      })
+}
+
+function añadir_producto_proveedor(id) {
+    var datos = {
+        "producto":id,
+        "proveedor_idproveedor":$("#proveedor_idproveedor").val(),
+        "precio_compra":$("#precio_compra").val()
+      };
+
+      //alert(JSON.stringify(datos))
+
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:8000/api/añadirProducto_Proveedor",
+        data:datos,
+        success:function(d) {
+            alert(JSON.stringify(d));
         }
       })
 }

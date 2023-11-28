@@ -45,6 +45,7 @@ Route::put('/actualizarProducto', [InventarioController::class, 'actualizar']);
 use App\Http\Controllers\CRISS\Producto_PController; //llamamos al controlador
 
 Route::post('/crearProducto_Proveedor', [Producto_PController::class, 'crear']);
+Route::post('/añadirProducto_Proveedor', [Producto_PController::class, 'añadir']);
 Route::get('/mostrarProducto_Proveedor', [Producto_PController::class, 'mostrar']);
 Route::get('/mostrarProveedorProducto_Proveedor', [Producto_PController::class, 'mostrarProveedor']);
 Route::get('/mostrarPrecioProducto_Proveedor', [Producto_PController::class, 'mostrarPrecio']);
