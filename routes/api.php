@@ -84,3 +84,19 @@ Route::get('/mostrarUnEmpleado', [empleadoController::class, 'mostrarUno']);
 Route::post('/crearEmpleado', [empleadoController::class, 'create']);
 Route::delete('/eliminarEmpleado', [empleadoController::class, 'destroy']);
 Route::put('/actualizarEmpleado', [empleadoController::class, 'actualizar']);
+
+
+
+// Jairo -----------------------------------------------------------------------------------------
+
+
+//Jhon
+//----Financiero
+use App\Http\Controllers\Jhon\FinancieroController; //llamamos al controlador
+Route::get('/mostrarventas', [FinancieroController::class, 'ventas']); //Asignamos el metodo, la URL y la funcion a ejecutar
+Route::get('/mostrarproductos', [FinancieroController::class, 'productos']); //Asignamos el metodo, la URL y la funcion a ejecutar
+Route::get('/mostrarfactura', [FinancieroController::class, 'factura']); //Asignamos el metodo, la URL y la funcion a ejecutar
+
+//Stripe pago
+use App\Http\Controllers\PagoController;
+Route::post('/stripe',[PagoController::class,'postPaymentStripe']);

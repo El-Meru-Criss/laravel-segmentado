@@ -55,4 +55,14 @@ Route::get('/factura', function () {
     return view('factura');
 });
 
+//Jhon
+Route::get('/financiero', function () {
+    return view('financiero');
+});
+
+//Stripe pago externo 
+// routes/web.php
+Route::get('stripe',[PagoController::class,'paymentStripe'])->name('addmoney.paymentstripe');
+Route::post('add-money-stripe',[PagoController::class,'postPaymentStripe'])->name('addmoney.stripe');
+
 // -----------------------------------------------------------------------------------
