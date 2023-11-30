@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-11-2023 a las 18:54:20
+-- Tiempo de generación: 30-11-2023 a las 21:45:31
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -55,7 +55,7 @@ CREATE TABLE `detalle_venta` (
 --
 DELIMITER $$
 CREATE TRIGGER `Salida` AFTER INSERT ON `detalle_venta` FOR EACH ROW INSERT INTO movimientos (Producto_servicio_idProducto_servicio, cantidad, tipo)
-VALUES (NEW.Producto_servicio_idProducto_servicio, 0, 0)
+VALUES (NEW.Producto_servicio_idProducto_servicio, NEW.cantidad, 0)
 $$
 DELIMITER ;
 
