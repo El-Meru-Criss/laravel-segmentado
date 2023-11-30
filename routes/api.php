@@ -108,3 +108,36 @@ Route::get('/mostrarfactura', [FinancieroController::class, 'factura']); //Asign
 //Stripe pago
 use App\Http\Controllers\PagoController;
 Route::post('/stripe',[PagoController::class,'postPaymentStripe']);
+
+
+// Brayan ----------------------------------------------------------------------------------------
+
+//--------------------- USUARIOS -----------------------------------------------------
+use App\Http\Controllers\brayan\UsuarioController; //llamamos al controlador
+
+Route::get('/mostrarUsuarios', [UsuarioController::class, 'index']); //Asignamos el metodo, la URL y la funcion a ejecutar
+Route::get('/mostrarUnUsuario', [UsuarioController::class, 'mostrarUno']);
+Route::post('/crearUsuario', [UsuarioController::class, 'create']);
+Route::delete('/eliminarUsuario', [UsuarioController::class, 'destroy']);
+Route::put('/actualizarUsuario', [UsuarioController::class, 'actualizar']);
+
+//--------------------- PERMISOS -----------------------------------------------------
+use App\Http\Controllers\brayan\PermisosController; //llamamos al controlador
+
+Route::get('/mostrarPermisos', [PermisosController::class, 'index']); //Asignamos el metodo, la URL y la funcion a ejecutar
+
+// --------------------- empleado_has_permisoController ---------------------------------------------------
+
+use App\Http\Controllers\brayan\empleado_has_permisoController; //llamamos al controlador
+
+Route::post('/crearEmpleado_has_permisoController', [empleado_has_permisoController::class, 'create']);
+Route::get('/mostrarPermisosEmpleado_has_permisoController', [empleado_has_permisoController::class, 'index']);
+Route::get('/mostrarempleado_has_permisoController', [empleado_has_permisoController::class, 'mostrar']);
+
+// --------------------- usuario_has_permisoController ---------------------------------------------------
+
+use App\Http\Controllers\brayan\usuario_has_permisoController; //llamamos al controlador
+
+Route::post('/crearUsuario_has_permisoController', [usuario_has_permisoController::class, 'create']);
+Route::get('/mostrarUnosusuario_has_permisoController', [usuario_has_permisoController::class, 'mostrarUnos']);
+Route::get('/mostrarUsuario_has_permisoController', [usuario_has_permisoController::class, 'index']);

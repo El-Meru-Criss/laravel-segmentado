@@ -66,3 +66,10 @@ Route::get('stripe',[PagoController::class,'paymentStripe'])->name('addmoney.pay
 Route::post('add-money-stripe',[PagoController::class,'postPaymentStripe'])->name('addmoney.stripe');
 
 // -----------------------------------------------------------------------------------
+
+
+// Brayan ----------------------------------------------------------------------------------------
+Route::get('/usuarios', function () {
+    return view('usuarios');
+});
+// -----------------------------------------------------------------------------------
