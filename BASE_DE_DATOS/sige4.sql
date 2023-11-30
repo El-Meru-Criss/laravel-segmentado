@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-11-2023 a las 23:45:57
+-- Tiempo de generación: 30-11-2023 a las 18:54:20
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -46,7 +46,8 @@ CREATE TABLE `detalle_venta` (
   `venta_idventa` int(11) NOT NULL,
   `precio_unidad` float NOT NULL,
   `subtotal` float NOT NULL,
-  `Producto_servicio_idProducto_servicio` int(11) NOT NULL
+  `Producto_servicio_idProducto_servicio` int(11) NOT NULL,
+  `cantidad` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -81,7 +82,7 @@ CREATE TABLE `empleado` (
 CREATE TABLE `empleado_has_permiso` (
   `Empleado_idEmpleado` int(11) NOT NULL,
   `permiso_idpermiso` int(11) NOT NULL,
-  `estado_empreado` binary(1) NOT NULL
+  `estado_empleado` binary(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -112,14 +113,6 @@ CREATE TABLE `movimientos` (
   `Producto_servicio_idProducto_servicio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Volcado de datos para la tabla `movimientos`
---
-
-INSERT INTO `movimientos` (`idMovimientos`, `cantidad`, `tipo`, `Producto_servicio_idProducto_servicio`) VALUES
-(1, 6, 0, 1),
-(2, 6, 0, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -131,34 +124,6 @@ CREATE TABLE `orden_compra` (
   `fecha_creacion` date NOT NULL,
   `total_compra` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `orden_compra`
---
-
-INSERT INTO `orden_compra` (`idorden_compra`, `fecha_creacion`, `total_compra`) VALUES
-(1, '2023-11-26', 0),
-(2, '2023-11-26', 0),
-(3, '2023-11-26', 0),
-(4, '2023-11-26', 0),
-(5, '2023-11-26', 0),
-(6, '2023-11-26', 0),
-(7, '2023-11-26', 0),
-(8, '2023-11-26', 0),
-(9, '2023-11-26', 0),
-(10, '2023-11-27', 7),
-(11, '2023-11-27', 0),
-(12, '2023-11-27', 0),
-(13, '2023-11-27', 0),
-(14, '2023-11-27', 0),
-(15, '2023-11-27', 0),
-(16, '2023-11-27', 100001000000),
-(17, '2023-11-27', 184000),
-(18, '2023-11-27', 0),
-(19, '2023-11-27', 120000),
-(20, '2023-11-27', 165000),
-(21, '2023-11-27', 198000),
-(22, '2023-11-27', 0);
 
 -- --------------------------------------------------------
 
@@ -197,29 +162,6 @@ CREATE TABLE `productos_pedidos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Volcado de datos para la tabla `productos_pedidos`
---
-
-INSERT INTO `productos_pedidos` (`idProducto`, `idproveedor`, `idorden_compra`, `cantidad`) VALUES
-(1, 1, 10, 9),
-(1, 1, 11, 4),
-(1, 1, 12, 7),
-(1, 1, 13, 5),
-(1, 1, 14, 4),
-(1, 1, 15, 5),
-(1, 1, 16, 5),
-(1, 1, 17, 4),
-(1, 1, 19, 6),
-(1, 1, 20, 5),
-(1, 1, 21, 6),
-(2, 1, 10, 4),
-(2, 1, 15, 5),
-(2, 1, 16, 7),
-(2, 1, 17, 8),
-(2, 1, 20, 5),
-(2, 1, 21, 6);
-
---
 -- Disparadores `productos_pedidos`
 --
 DELIMITER $$
@@ -240,14 +182,6 @@ CREATE TABLE `producto_provedoor` (
   `precio_compra` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Volcado de datos para la tabla `producto_provedoor`
---
-
-INSERT INTO `producto_provedoor` (`Producto_servicio_idProducto_servicio`, `proveedor_idproveedor`, `precio_compra`) VALUES
-(1, 1, 20000),
-(2, 1, 13000);
-
 -- --------------------------------------------------------
 
 --
@@ -261,14 +195,6 @@ CREATE TABLE `producto_servicio` (
   `precio` float NOT NULL,
   `cantidad_stock` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `producto_servicio`
---
-
-INSERT INTO `producto_servicio` (`idProducto_servicio`, `nom_producto_servicio`, `descripcion`, `precio`, `cantidad_stock`) VALUES
-(1, 'gato', 'comida pa gato', 7000, 9),
-(2, 'prro', 'comida pa prro', 7000, 10);
 
 -- --------------------------------------------------------
 
@@ -284,14 +210,6 @@ CREATE TABLE `proveedor` (
   `telefono_pro` varchar(45) NOT NULL,
   `correo_pro` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `proveedor`
---
-
-INSERT INTO `proveedor` (`idproveedor`, `nom_empresa_pro`, `per_conctacto_pro`, `direccion_pro`, `telefono_pro`, `correo_pro`) VALUES
-(1, 'Contegral', 'Jose', 'CRA 11', '111', 'hola@gmail.com'),
-(2, 'Zipa', '3', '2', '1', 'hola@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -500,13 +418,13 @@ ALTER TABLE `licencias`
 -- AUTO_INCREMENT de la tabla `movimientos`
 --
 ALTER TABLE `movimientos`
-  MODIFY `idMovimientos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idMovimientos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `orden_compra`
 --
 ALTER TABLE `orden_compra`
-  MODIFY `idorden_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idorden_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
