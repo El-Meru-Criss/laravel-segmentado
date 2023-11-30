@@ -4,12 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>solamente pruebas</title>
+
 </head>
 <body>
   
-<center>    
-  <h3>Movimientos</h3>  <table id="Movimientos" border="1">    <tr>      <td>Producto</td>      <td>Cantidad</td>      <td>Tipo</td>    </tr>  </table>
-</center>
+  <button id="agregarEvento">Agregar a Google Calendar</button>
+  <input type="text" id="Nombre_evento">
+  <script>
+      document.getElementById('agregarEvento').addEventListener('click', function() {
+        // Fecha del evento (debe estar en el formato YYYY-MM-DD)
+        var fechaEvento = '2023-12-01';
+
+  
+        // Detalles del evento
+        var detallesEvento = {
+            'summary': document.getElementById("Nombre_evento").value,
+            'description': 'Esto es una pruba de la api aquella',
+            'location': 'Debajo de un puente',
+            'start': {
+              'dateTime': fechaEvento,
+              'timeZone': 'America/Bogota', // Por ejemplo, 'America/Los_Angeles'
+            },
+            'end': {
+              'dateTime': fechaEvento,
+              'timeZone': 'America/Bogota',
+            },
+            'reminders': {
+              'useDefault': false,
+              'overrides': [
+                  {'method': 'popup', 'minutes': 30},
+                  {'method': 'email', 'minutes': 24 * 60},
+              ],
+            },
+        };
+  
+        // Crear el enlace del evento
+        var enlaceEvento = 'https://www.google.com/calendar/render?action=TEMPLATE&dates=' +
+            detallesEvento.start.dateTime + '/' + detallesEvento.end.dateTime +
+            '&text=' + encodeURIComponent(detallesEvento.summary) +
+            '&details=' + encodeURIComponent(detallesEvento.description) +
+            '&location=' + encodeURIComponent(detallesEvento.location) +
+            '&sprop=&sprop=name:';
+  
+        // Abrir el enlace en una nueva pestaña
+        window.open(enlaceEvento, '_blank');
+      });
+  </script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
   
 </body>
 </html>

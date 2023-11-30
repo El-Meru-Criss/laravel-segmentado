@@ -84,7 +84,15 @@ Route::get('/mostrarUnEmpleado', [empleadoController::class, 'mostrarUno']);
 Route::post('/crearEmpleado', [empleadoController::class, 'create']);
 Route::delete('/eliminarEmpleado', [empleadoController::class, 'destroy']);
 Route::put('/actualizarEmpleado', [empleadoController::class, 'actualizar']);
+//--------------------- LICENCIAS -----------------------------------------------------
+use App\Http\Controllers\Steven\licenciaController; //llamamos al controlador
 
+Route::get('/mostrarLicencias', [licenciaController::class, 'index']); //Asignamos el metodo, la URL y la funcion a ejecutar
+Route::get('/mostrarUnaLicencia', [licenciaController::class, 'mostrarUno']);
+Route::post('/crearLicencia', [licenciaController::class, 'create']);
+Route::delete('/eliminarLicencia', [licenciaController::class, 'destroy']);
+Route::put('/actualizarLicencia', [licenciaController::class, 'actualizar']);
+Route::get('/mostrarTipoLicencia', [licenciaController::class, 'index_tipo_licencia']);
 
 
 // Jairo -----------------------------------------------------------------------------------------

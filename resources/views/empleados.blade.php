@@ -23,19 +23,54 @@
         </button>
 
         <!-- C PRODUCTO/SERVICIO -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Crear producto/servicio
+        <button onclick="licencias()" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Permisos/Licencias/Vacaciones
         </button>
-
-        <!-- CRUD PEDIDOS COMPRA -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Pedidos de compra
-        </button>
-
-        <!-- MOVIMIENTOS -->
-        <button onclick="" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Movimientos
-        </button>
+        <!-- Integracion API agregar evento google -->
+        <button id="agregarEvento">Agregar a Google Calendar</button>
+        <input type="text" id="Nombre_evento" placeholder='Nombre del evento'>
+        <input type="text" id="Descripcion" placeholder='Descripcion del evento'>
+        <input type="text" id="lugar" placeholder='Lugar del evento'>
+        <input type="date" id="fecha" placeholder='Fecha del evento'>
+        <script>
+            document.getElementById('agregarEvento').addEventListener('click', function() {
+                // Fecha del evento (debe estar en el formato YYYY-MM-DD)
+                var fechaEvento = document.getElementById("fecha").value;
+                
+                // Detalles del evento
+                var detallesEvento = {
+                    'summary': document.getElementById("Nombre_evento").value,
+                    'description': document.getElementById("Descripcion").value,
+                    'location': document.getElementById("lugar").value,
+                    'start': {
+                    'dateTime': fechaEvento + 'T09:00:00',
+                    'timeZone': 'America/Bogota', // Por ejemplo, 'America/Los_Angeles'
+                    },
+                    'end': {
+                    'dateTime': fechaEvento + 'T17:00:00',
+                    'timeZone': 'America/Bogota',
+                    },
+                    'reminders': {
+                    'useDefault': false,
+                    'overrides': [
+                        {'method': 'popup', 'minutes': 30},
+                        {'method': 'email', 'minutes': 24 * 60},
+                    ],
+                    },
+                };
+        
+                // Crear el enlace del evento
+                var enlaceEvento = 'https://www.google.com/calendar/render?action=TEMPLATE&dates=' +
+                    detallesEvento.start.dateTime + '/' + detallesEvento.end.dateTime +
+                    '&text=' + encodeURIComponent(detallesEvento.summary) +
+                    '&details=' + encodeURIComponent(detallesEvento.description) +
+                    '&location=' + encodeURIComponent(detallesEvento.location) +
+                    '&sprop=&sprop=name:';
+        
+                // Abrir el enlace en una nueva pestaña
+                window.open(enlaceEvento, '_blank');
+            });
+        </script>
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
